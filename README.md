@@ -26,7 +26,7 @@ cd myapp
 cp ../AGENTS.md .
 go run . version              # → v0.1.0
 go run . listings             # → JSON list of seed data
-go run . serve                # → preview server at http://localhost:8080
+go run . serve                # → preview server at http://localhost:8080/api/listings  http://localhost:8080/api/health
 curl localhost:8080/api/listings
 ```
 
