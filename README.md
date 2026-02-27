@@ -74,7 +74,7 @@ The result: the repo is `Capmus-Team/supost-cli` on GitHub, but the binary and a
 ```bash
 supost version            # → v0.1.0
 supost listings            # → JSON seed data
-supost serve               # → http://localhost:8080
+supost serve               # → http://localhost:8080/api/listings  http://localhost:8080/api/health
 ```
 
 The Go module path (`github.com/Capmus-Team/supost-cli`) handles the repo name, while `scaffold.sh supost` set the binary name, command names, and config file names (`.supost.yaml`) all to the short version.
