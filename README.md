@@ -14,15 +14,16 @@ AI coding agents tend to dump everything into a single file or create chaotic fo
 
 ```bash
 # Clone this template
-git clone https://github.com/yourname/go-cli-starter.git
-cd go-cli-starter
+git clone https://github.com/Capmus-Team/go-cli-template.git
+cd go-cli-template
 
 # Scaffold a new project
 chmod +x scaffold.sh
-./scaffold.sh myapp github.com/yourname/myapp
+./scaffold.sh myapp github.com/Capmus-Team/myapp
 
 # Try it immediately
 cd myapp
+cp ../AGENTS.md .
 go run . version              # → v0.1.0
 go run . listings             # → JSON list of seed data
 go run . serve                # → preview server at http://localhost:8080
@@ -30,6 +31,55 @@ curl localhost:8080/api/listings
 ```
 
 No database, no API keys, no Docker required. Everything works out of the box.
+
+## Real-World Example: SUPost CLI
+
+This is how we used this template to scaffold [SUPost](https://github.com/Capmus-Team/supost-cli), a university marketplace prototype. The repo name is `supost-cli` but the binary and commands are just `supost`:
+
+```bash
+# 1. Go to your template directory
+cd ~/Developer/github/capmus-team/go-cli-template
+
+# 2. Run the scaffold (app name "supost", module path uses repo name "supost-cli")
+./scaffold.sh supost github.com/Capmus-Team/supost-cli
+
+# 3. Copy AGENTS.md into the generated project
+cp AGENTS.md supost/
+
+# 4. Move the generated project to its own directory
+mv supost ../supost-cli
+cd ../supost-cli
+
+# 5. Initialize git and push
+git init
+git add -A
+git commit -m "Initial commit: SUPost CLI prototype"
+
+# Using gh CLI:
+gh repo create Capmus-Team/supost-cli \
+  --public \
+  --source=. \
+  --description "SUPost university marketplace CLI prototype (Cobra + Supabase)" \
+  --push
+
+# Or manually: create repo at https://github.com/organizations/Capmus-Team/repositories/new
+# Then:
+git remote add origin git@github.com:Capmus-Team/supost-cli.git
+git branch -M main
+git push -u origin main
+```
+
+The result: the repo is `Capmus-Team/supost-cli` on GitHub, but the binary and all commands are just `supost`:
+
+```bash
+supost version            # → v0.1.0
+supost listings            # → JSON seed data
+supost serve               # → http://localhost:8080
+```
+
+The Go module path (`github.com/Capmus-Team/supost-cli`) handles the repo name, while `scaffold.sh supost` set the binary name, command names, and config file names (`.supost.yaml`) all to the short version.
+
+> **Tip:** The first argument to `scaffold.sh` is the **binary name** (what users type). The second argument is the **Go module path** (which typically matches your GitHub repo URL). They don't need to match.
 
 ## What Gets Generated
 
