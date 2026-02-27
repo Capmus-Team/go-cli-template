@@ -42,6 +42,15 @@ fi
 # Helper to write files with the correct module path
 mod() { sed "s|MODPATH|${MODULE_PATH}|g"; }
 
+# Cross-platform sed -i (macOS BSD sed vs Linux GNU sed)
+sedi() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i '' "$@"
+    else
+        sed -i "$@"
+    fi
+}
+
 # ---------------------------------------------------------------------------
 # Create directory structure
 # ---------------------------------------------------------------------------
@@ -123,7 +132,7 @@ func initConfig() {
 	}
 }
 EOF
-sed -i "s/APP_NAME_PH/${APP_NAME}/g" "${APP_NAME}/cmd/root.go"
+sedi "s/APP_NAME_PH/${APP_NAME}/g" "${APP_NAME}/cmd/root.go"
 log "Created cmd/root.go"
 
 # ---------------------------------------------------------------------------
@@ -1029,7 +1038,7 @@ migrate:
 clean:
 	rm -rf bin/ coverage.out
 MKEOF
-sed -i "s/APP_NAME_PH/${APP_NAME}/g" "${APP_NAME}/Makefile"
+sedi "s/APP_NAME_PH/${APP_NAME}/g" "${APP_NAME}/Makefile"
 log "Created Makefile"
 
 # ---------------------------------------------------------------------------
